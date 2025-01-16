@@ -1,0 +1,20 @@
+{
+  "name": "svg-toolbox",
+  "version": "1.0.2",
+  "description": "This library provides some SVG-related tools",
+  "main": "lib/index.js",
+  "repository": "https://github.com/SteamedBread2333/svg-toolbox",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "svg"
+  ],
+  "author": "pipi",
+  "license": "MIT",
+  "dependencies": {
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0",
+    "sharp": "^0.33.5"
+  }
+}
