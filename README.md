@@ -21,3 +21,11 @@ const { diffSvg } = require('svg-toolbox')
 diffSvg(svgPath1, svgPath2, diffResultSavePath)
 ...
 ```
+
+```js
+const { removeEmptyCoordinates } = require('svg-toolbox')
+
+...
+const mData = removeEmptyCoordinates(svgContent)
+...
+```
