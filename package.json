@@ -1,6 +1,6 @@
 {
   "name": "svg-toolbox",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This library provides some SVG-related tools",
   "main": "lib/index.js",
   "repository": "https://github.com/SteamedBread2333/svg-toolbox",
