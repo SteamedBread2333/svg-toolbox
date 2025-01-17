@@ -5,8 +5,6 @@
  * @module applyRemoveNanCoordinates
  * @author pipi
  */
-
-// @ts-ignore
 import { JSDOM } from 'jsdom';
 
 /**
@@ -21,6 +19,9 @@ export default function (svgContent: string): string {
   });
   const document = dom.window.document;
   const svgElement = document.querySelector('svg');
+  if (!svgElement) {
+    throw new Error('No SVG element found in the provided content.');
+  }
   const paths = svgElement.querySelectorAll('path');
 
   // Iterate over each path element

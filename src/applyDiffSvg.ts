@@ -8,14 +8,10 @@
  * @requires path - Path module
  * @author pipi
  */
-// @ts-ignore
 import fs from 'fs';
 import sharp from 'sharp';
-// @ts-ignore
 import pngjs from 'pngjs';
-// @ts-ignore
 import path from 'path';
-//  @ts-ignore
 import pixelmatch from 'pixelmatch';
 
 const PNG = pngjs.PNG;
@@ -36,10 +32,7 @@ function validSuffix(filename: string) {
  * @param {string} diffFilePath - The path to save the diff image.
  * @returns - The diff image buffer and the number of different pixels.
  */
-export default async function (pathA: string, pathB: string, diffFilePath: string): Promise<{ diffPngBuffer: ArrayBuffer, numDiffPixels: number } | void> {
-  // Import pixelmatch library
-  // @ts-ignore
-  // const pixelmatch = (await import('pixelmatch')).default;
+export default async function (pathA: string, pathB: string, diffFilePath: string): Promise<{ diffPngBuffer: Buffer<ArrayBufferLike>, numDiffPixels: number } | void> {
   // Read the PNG files as buffers
   const pngA = await sharp(pathA).toBuffer();
   const pngB = await sharp(pathB).toBuffer();

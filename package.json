@@ -1,6 +1,6 @@
 {
   "name": "svg-toolbox",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "This library provides some SVG-related tools",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -29,6 +29,10 @@
     "sharp": "^0.33.5"
   },
   "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^22.10.7",
+    "@types/pixelmatch": "^5.2.6",
+    "@types/pngjs": "^6.0.5",
     "typescript": "^5.7.3"
   }
 }

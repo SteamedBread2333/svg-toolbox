@@ -7,9 +7,8 @@
  * @author pipi
  */
 
-import sharp from 'sharp';
-// @ts-ignore
 import fs from 'fs';
+import sharp from 'sharp';
 
 /**
  * Converts an SVG file to PNG format.
