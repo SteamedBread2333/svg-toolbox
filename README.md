@@ -1,5 +1,7 @@
 # svg-toolbox
 This library provides some SVG-related tools
+[![npm version](https://img.shields.io/npm/v/svg-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/svg-toolbox)
+[![npm downloads](https://img.shields.io/npm/dt/svg-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/svg-toolbox)
 
 ## Installation
 ```bash
