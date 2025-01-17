@@ -3,9 +3,19 @@
   "version": "1.0.5",
   "description": "This library provides some SVG-related tools",
   "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "es/index.d.ts",
+  "files": [
+    "lib",
+    "es",
+    "LICENSE",
+    "README.md"
+  ],
   "repository": "https://github.com/SteamedBread2333/svg-toolbox",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:es": "tsc -p tsconfig.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build": "npm run build:es && npm run build:cjs"
   },
   "keywords": [
     "svg"
@@ -14,8 +24,11 @@
   "license": "MIT",
   "dependencies": {
     "jsdom": "^26.0.0",
-    "pixelmatch": "^6.0.0",
+    "pixelmatch": "5.3.0",
     "pngjs": "^7.0.0",
     "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
   }
 }
