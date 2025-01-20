@@ -131,3 +131,5 @@ dist
 
 es/
 lib/
+test/
+example/
