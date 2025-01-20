@@ -10,7 +10,7 @@ This library provides some SVG-related tools
 npm install svg-toolbox
 ```
 ## Usage
-```js
+```typescript
 const { svg2png } = require('svg-toolbox')
 
 ...
@@ -18,18 +18,25 @@ svg2png(svgPath, pngSavePath, x)
 ...
 ```
 
-```js
+```typescript
 const { diffSvg } = require('svg-toolbox')
 
 ...
-diffSvg(svgPath1, svgPath2, diffResultSavePath)
+const { 
+  diffPngBuffer,
+  numDiffPixels
+}:Promise<{
+  diffPngBuffer: Buffer<ArrayBufferLike>
+  numDiffPixels: number
+} | void> = await diffSvg(svgPath1, svgPath2, diffResultSavePath)
+const diffPngBase64 = `data:image/png;base64,${diffPngBuffer.toString('base64')}`;
 ...
 ```
 
-```js
+```typescript
 const { removeEmptyCoordinates } = require('svg-toolbox')
 
 ...
-const mData = removeEmptyCoordinates(svgContent)
+const modifiedSvgContent: string = removeEmptyCoordinates(svgContent)
 ...
 ```

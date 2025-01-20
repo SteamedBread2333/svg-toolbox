@@ -68,5 +68,10 @@ export default async function (pathA: string, pathB: string, diffFilePath: strin
     }
   }
 
-  return { diffPngBuffer, numDiffPixels };
+  return {
+    // The diff image buffer
+    diffPngBuffer,
+    // The number of different pixels
+    numDiffPixels
+  };
 }
