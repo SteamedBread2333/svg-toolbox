@@ -38,7 +38,8 @@ export default function (svgContent: string): string {
     const commands = d
       // Remove 'nan' and '-nan' values
       .replace(/nan|-nan/g, ' ')
-      // Split the 'd' attribute into commands and parameters
+      // Split the 'd' attribute into commands and parameters. path command: M, L, H, V, C, S, Q, T, A, Z, z. 
+      // -> https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#path_commands
       .split(/(?=[MmLlHhVvCcSsQqTtAaZz])/).map((command) => {
         // Split each command into type and parameters
         const type = command[0];
@@ -46,8 +47,9 @@ export default function (svgContent: string): string {
         const params = command.slice(1).trim().split(/[\s,]+/).filter(Number);
         return { type, params };
       })
-      // Filter out commands with no parameters
-      .filter((command) => (command.type === 'Z' || command.params.length > 0));
+      // Filter out commands with no parameters, or commands with only 'z' or 'Z'. 'Zz' means close the path. 
+      // -> https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/d#closepath
+      .filter((command) => (command.type === 'Z' || command.type === 'z' || command.params.length > 0));
     // Reconstruct the 'd' attribute
     const modifiedD = commands.map((command) => {
       return command.type + command.params.join(' ');
