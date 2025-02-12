@@ -43,10 +43,20 @@ export default function (svgContent: string): string {
       .split(/(?=[MmLlHhVvCcSsQqTtAaZz])/).map((command) => {
         // Split each command into type and parameters
         const type = command[0];
-        // Split parameters by spaces or commas, filter out empty values, and convert to numbers
-        const params = command.slice(1).trim().split(/[\s,]+/).filter(Number);
-        return { type, params };
+        // If the command is not 'z' or 'Z', then it has parameters.
+        if (type !== 'Z' && type !== 'z') {
+          // Split parameters by spaces or commas, filter out empty values, and convert to numbers
+          const params = command.slice(1).split(/[\s,]+/)
+          // Filter out non-numeric values
+          if (params.every(Number)) {
+            return { type, params };
+          }
+        } else {
+          return { type, params: [] };
+        }
       })
+      // Filter out undefined values
+      .filter((item) => item !== void 0)
       // Filter out commands with no parameters, or commands with only 'z' or 'Z'. 'Zz' means close the path. 
       // -> https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/d#closepath
       .filter((command) => (command.type === 'Z' || command.type === 'z' || command.params.length > 0));
