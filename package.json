@@ -15,7 +15,8 @@
   "scripts": {
     "build:es": "tsc -p tsconfig.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build": "npm run build:es && npm run build:cjs"
+    "build": "npm run build:es && npm run build:cjs",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "svg"
