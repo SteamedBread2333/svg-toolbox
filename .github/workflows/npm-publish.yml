@@ -1,11 +1,14 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created or manually triggered
 # For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
 
-name: Node.js Package
+name: Publish NPM Package
 
 on:
+  # Trigger the workflow on release creation
   release:
     types: [created]
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
   build:
@@ -29,4 +32,4 @@ jobs:
       - run: npm ci
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
