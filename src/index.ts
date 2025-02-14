@@ -1,7 +1,7 @@
 import svg2Png from './applySvg2Png';
 import diffSvg from './applyDiffSvg';
 import removeNanCoordinates from './applyRemoveNanCoordinates';
-import { createSVGElement, cloneSVGElement, mergeSVGElements, convertSVGToBase64, convertBase64ToSVG } from './utils'
+import { createSVGElement, cloneSVGElement, mergeSVGElements, convertSVGToBase64, convertBase64ToSVG } from './common'
 
 const removeEmptyCoordinates = removeNanCoordinates
 
