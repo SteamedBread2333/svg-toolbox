@@ -7,10 +7,12 @@
  */
 
 import { JSDOM } from 'jsdom';
+import { isValidSvgElement, isValidSvgString } from './validate';
 
 // Create a virtual DOM environment
 const dom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`);
-const { document } = dom.window;
+const fakeWindow = dom.window;
+const { document } = fakeWindow;
 
 /**
  * Creates an SVG element from a given element.
@@ -33,7 +35,7 @@ const { document } = dom.window;
  * @returns 
  */
 export function createSVGElement(svgContent: string): Element {
-  const svgElement = new dom.window.DOMParser().parseFromString(svgContent, 'image/svg+xml').documentElement;
+  const svgElement = new fakeWindow.DOMParser().parseFromString(svgContent, 'image/svg+xml').documentElement;
   return svgElement
 }
 
@@ -55,9 +57,9 @@ export function createSVGElement(svgContent: string): Element {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer - XMLSerializer documentation
  */
 export function cloneSVGElement(element: Element): Element {
-  const serializer = new dom.window.XMLSerializer();
+  const serializer = new fakeWindow.XMLSerializer();
   const sourceCode = serializer.serializeToString(element);
-  const parser = new dom.window.DOMParser();
+  const parser = new fakeWindow.DOMParser();
   const doc = parser.parseFromString(sourceCode, 'image/svg+xml');
   return doc.documentElement!;
 }
@@ -89,12 +91,12 @@ export function mergeSVGElements(elements: Element[]): Element {
 }
 
 /**
- * Converts an SVG element to a Base64-encoded string.
+ * Converts an SVG element or SVG string to a Base64-encoded string.
  * 
- * This function serializes the SVG element to a string and then encodes it to Base64.
+ * This function serializes the SVG element or SVG string to a string and then encodes it to Base64.
  * The resulting string can be used as a data URI for embedding SVG content in HTML or CSS.
  * 
- * @param {Element} svgElement - The SVG element to convert.
+ * @param {Element | string} svgContent - The SVG element or SVG string to convert.
  * @returns {string} - The Base64-encoded string representation of the SVG element.
  * 
  * @example
@@ -105,9 +107,16 @@ export function mergeSVGElements(elements: Element[]): Element {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer - XMLSerializer documentation
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Buffer - Buffer documentation
  */
-export function convertSVGToBase64(svgElement: Element): string {
-  const serializer = new dom.window.XMLSerializer();
-  const svgString = serializer.serializeToString(svgElement);
+export function convertSVGToBase64(svgContent: Element | string): string {
+  let svgString: string;
+  if (isValidSvgString(svgContent)) {
+    svgString = svgContent as string;
+  } else if (isValidSvgElement(svgContent)) {
+    const serializer = new fakeWindow.XMLSerializer();
+    svgString = serializer.serializeToString(svgContent as Element);
+  } else {
+    throw new Error('The provided content is not a valid SVG string or SVG element.');
+  }
   return `data:image/svg+xml;base64,${Buffer.from(svgString).toString('base64')}`;
 }
 
@@ -129,6 +138,10 @@ export function convertSVGToBase64(svgElement: Element): string {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Buffer - Buffer documentation
  */
 export function convertBase64ToSVG(base64String: string): string {
-  const svgString = Buffer.from(base64String.split(',')[1], 'base64').toString('utf-8');
-  return svgString;
+  try {
+    const svgString = Buffer.from(base64String.split(',')[1], 'base64').toString('utf-8');
+    return svgString;
+  } catch (error) {
+    throw new Error('Invalid Base64 string.');
+  }
 }
