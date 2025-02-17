@@ -92,7 +92,7 @@ console.log(mergedElement);
 ```
 
 ### convertSVGToBase64
-Converts an SVG element to a Base64-encoded string.
+Converts an SVG element or SVG string to a Base64-encoded string.
 
 ```typescript
 import { convertSVGToBase64 } from 'svg-toolbox';
