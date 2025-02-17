@@ -10,7 +10,6 @@ This module provides utility functions for working with SVG elements and files, 
 
 [![npm version](https://img.shields.io/npm/v/svg-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/svg-toolbox)
 [![npm downloads](https://img.shields.io/npm/dt/svg-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/svg-toolbox)
-[![deps](https://img.shields.io/github/license/SteamedBread2333/svg-toolbox.svg)](https://www.npmjs.com/package/svg-toolbox)
 
 ## Installation
 ```bash
