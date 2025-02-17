@@ -1,3 +1,10 @@
+<h1 align="center">
+  <br/>
+    <img width="200" alt="image" src="https://github.com/user-attachments/assets/5fb4fbd0-10b4-4abf-93fd-d98b17845f34" />
+  <br/>
+</h1>
+
+
 # SVG Utility Functions
 This module provides utility functions for working with SVG elements and files, including creating, cloning, merging, converting SVG to Base64, comparing SVG images, normalizing path data, and converting SVG to PNG format.
 
