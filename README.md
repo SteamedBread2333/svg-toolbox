@@ -39,10 +39,7 @@ npm install svg-toolbox
 Creates an SVG element from a given SVG content string.
 
 ```typescript
-import { createSVGElement } from 'svg-toolbox';
-
-const svgContent = `<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />`;
-const svgElement = createSVGElement(svgContent);
+const svgElement = createSVGElement(`<svg><path d="M10 20L30 40Z" /></svg>`);
 console.log(svgElement);
 ```
 ### cloneSVGElement
@@ -101,22 +98,18 @@ console.log(mergedElement);
 Converts an SVG element or SVG string to a Base64-encoded string.
 
 ```typescript
-import { convertSVGToBase64 } from 'svg-toolbox';
-import { JSDOM } from 'jsdom';
+import { createSVGElement, convertSVGToBase64, convertBase64ToSVG } from 'svg-toolbox';
 
-const dom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`);
-const { document } = dom.window;
-
-const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-svgElement.setAttribute('cx', '50');
-svgElement.setAttribute('cy', '50');
-svgElement.setAttribute('r', '40');
-svgElement.setAttribute('stroke', 'black');
-svgElement.setAttribute('stroke-width', '3');
-svgElement.setAttribute('fill', 'red');
+const svgElement = createSVGElement(`<svg><path d="M10 20L30 40Z" /></svg>`);
 
 const base64String = convertSVGToBase64(svgElement);
-console.log(base64String);
+console.log('convertSVGToBase64 param element', base64String);
+
+const svgString = convertBase64ToSVG(base64String);
+console.log('convertBase64ToSVG', svgString);
+
+const svgBase64 = convertSVGToBase64(svgString);
+console.log('convertSVGToBase64 param string', svgBase64);
 ```
 
 ### convertBase64ToSVG
