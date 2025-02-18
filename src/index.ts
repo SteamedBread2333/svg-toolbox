@@ -1,7 +1,8 @@
-import svg2Png from './applySvg2Png';
-import diffSvg from './applyDiffSvg';
-import removeNanCoordinates from './applyRemoveNanCoordinates';
+import svg2Png from './extra-apply/applySvg2Png';
+import diffSvg from './extra-apply/applyDiffSvg';
+import removeNanCoordinates from './extra-apply/applyRemoveNanCoordinates';
 import { createSVGElement, cloneSVGElement, mergeSVGElements, convertSVGToBase64, convertBase64ToSVG } from './common'
+import pixelLevelDiffPng from './utils/pixelLevelDiffPng';
 
 const removeEmptyCoordinates = removeNanCoordinates
 
@@ -14,5 +15,6 @@ export {
    */
   removeEmptyCoordinates,
   removeNanCoordinates,
-  createSVGElement, cloneSVGElement, mergeSVGElements, convertSVGToBase64, convertBase64ToSVG
+  createSVGElement, cloneSVGElement, mergeSVGElements, convertSVGToBase64, convertBase64ToSVG,
+  pixelLevelDiffPng
 };

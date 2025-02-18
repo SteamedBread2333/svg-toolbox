@@ -10,11 +10,8 @@
  */
 import fs from 'fs';
 import sharp from 'sharp';
-import pngjs from 'pngjs';
 import path from 'path';
-import pixelmatch from 'pixelmatch';
-
-const PNG = pngjs.PNG;
+import pixelLevelDiffSvg from '../utils/pixelLevelDiffPng';
 
 /**
  * Checks if the filename has a valid suffix.
@@ -27,45 +24,35 @@ function validSuffix(filename: string) {
 
 /**
  * Compares two SVG files and generates a diff image.
- * @param {string} pathA - The path of the first SVG file.
- * @param {string} pathB - The path of the second SVG file.
+ * @param {string} pathA - The path to the first SVG file.
+ * @param {string} pathB - The path to the second SVG file.
  * @param {string} diffFilePath - The path to save the diff image.
  * @returns - The diff image buffer and the number of different pixels.
  */
 export default async function (pathA: string, pathB: string, diffFilePath: string): Promise<{ diffPngBuffer: Buffer<ArrayBufferLike>, numDiffPixels: number } | void> {
-  // Read the PNG files as buffers
-  const pngA = await sharp(pathA).toBuffer();
-  const pngB = await sharp(pathB).toBuffer();
-
-  // Decode the PNG buffers
-  const img1 = PNG.sync.read(pngA);
-  const img2 = PNG.sync.read(pngB);
-  const { width, height } = img1;
-
-  // Create a new PNG object for the diff image
-  const diff = new PNG({ width, height });
-
-  // Compare the images and get the number of different pixels
-  const numDiffPixels = pixelmatch(img1.data, img2.data, diff.data, width, height, { threshold: 0.1 });
-
-  // Write the diff image to a buffer
-  const diffPngBuffer = PNG.sync.write(diff);
-
+  let diffFileName = '';
   // If a diff file path is provided, save the diff image
   if (diffFilePath) {
-    const diffFileName = path.basename(diffFilePath);
+    diffFileName = path.basename(diffFilePath);
     if (!validSuffix(diffFileName)) {
       console.error(`Error converting ${diffFileName} to PNG: No suffix found.`);
       return;
     }
-    fs.writeFileSync(diffFilePath, diffPngBuffer);
+  } else {
+    console.error('Error converting to PNG: No diff file path provided.');
+    return;
+  }
+  // Read the PNG files as buffers
+  const pngA = await sharp(pathA).toBuffer();
+  const pngB = await sharp(pathB).toBuffer();
 
-    // Log the result
-    if (numDiffPixels === 0) {
-      console.log(`\x1b[32mFile name: ${diffFileName} Number of different pixels: ${numDiffPixels}\x1b[0m`);
-    } else {
-      console.log(`\x1b[33mFile name: ${diffFileName} Number of different pixels: ${numDiffPixels}\x1b[0m`);
-    }
+  const { diffPngBuffer, numDiffPixels } = pixelLevelDiffSvg(pngA, pngB, 0.1);
+  fs.writeFileSync(diffFilePath, diffPngBuffer);
+  // Log the result
+  if (numDiffPixels === 0) {
+    console.log(`\x1b[32mFile name: ${diffFileName} Number of different pixels: ${numDiffPixels}\x1b[0m`);
+  } else {
+    console.log(`\x1b[33mFile name: ${diffFileName} Number of different pixels: ${numDiffPixels}\x1b[0m`);
   }
 
   return {
