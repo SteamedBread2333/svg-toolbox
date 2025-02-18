@@ -4,6 +4,7 @@
  * @module validate
  * @author pipi
  */
+import { JSDOM } from 'jsdom';
 
 /**
  * Validates whether the provided content is a valid SVG string.
@@ -17,12 +18,17 @@ export function isValidSvgString(content: any): boolean {
     return false;
   }
 
-  // Regular expression to find the <svg> opening tag in the string.
-  const svgRegExp = /<svg[^>]*>/i;
-  const startTag = content.match(svgRegExp);
-
-  // Check if a matching <svg> tag was found and it's in lowercase (case-insensitive check).
-  return !!(startTag && startTag[0].toLowerCase().includes('<svg'));
+  try {
+    // Create a virtual DOM environment
+    const dom = new JSDOM(content);
+    // Parse the content as SVG and check if the root node is an SVG element.
+    const rootNode = new dom.window.DOMParser().parseFromString(content, 'image/svg+xml').documentElement;
+    // Return true if the root node is an SVG element, false otherwise.
+    return rootNode.nodeName.toLowerCase() === 'svg';
+  } catch (error) {
+    // If there's an error during parsing, it's not a valid SVG string.
+    return false;
+  }
 }
 
 /**
@@ -36,7 +42,6 @@ export function isValidSvgElement(content: any): boolean {
   return (
     content &&
     typeof content === 'object' &&
-    content.tagName.toLowerCase() === 'svg' &&
-    content.namespaceURI === 'http://www.w3.org/2000/svg' // SVG namespace URI
+    content.tagName.toLowerCase() === 'svg'
   );
 }
