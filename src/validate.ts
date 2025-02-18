@@ -18,7 +18,7 @@ export function isValidSvgString(content: any): boolean {
   }
 
   // Regular expression to find the <svg> opening tag in the string.
-  const svgRegExp = /<svg([^>]*?)?>/i;
+  const svgRegExp = /<svg[^>]*>/i;
   const startTag = content.match(svgRegExp);
 
   // Check if a matching <svg> tag was found and it's in lowercase (case-insensitive check).
