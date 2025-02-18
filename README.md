@@ -28,8 +28,8 @@ npm install svg-toolbox
     - [convertSVGToBase64](#convertsvgtobase64)
     - [convertBase64ToSVG](#convertbase64tosvg)
     - [diffSvg](#diffsvg)
-    - [removeNanCoordinates](#removenancoordinates)
     - [svg2png](#svg2png)
+    - [removeNanCoordinates](#removenancoordinates)
   - [License](#license)
 
 ## Usage
@@ -133,13 +133,30 @@ const pathA = 'path/to/first/image.png';
 const pathB = 'path/to/second/image.png';
 const diffFilePath = 'path/to/save/diff/image.png';
 
-diffSvg(pathA, pathB, diffFilePath)
-  .then(({ diffPngBuffer, numDiffPixels }) => {
-    console.log(`Number of different pixels: ${numDiffPixels}`);
-  })
-  .catch(error => {
-    console.error('Error generating diff image:', error);
-  });
+// diffPngBuffer is a Buffer object containing the diff image in PNG format.
+// numDiffPixels is the number of different pixels between the two images.
+const { diffPngBuffer, numDiffPixels } = await diffSvg(pathA, pathB, diffFilePath)
+const diffPngBase64 = `data:image/png;base64,${diffPngBuffer.toString('base64')}`;
+console.log(`Number of different pixels: ${numDiffPixels}`);
+```
+
+### svg2png
+Converts an SVG file to PNG format.
+
+```typescript
+// Callback/Promise
+import { svg2Png } from 'svg-toolbox';
+
+const svgPath = 'path/to/input/image.svg';
+const pngPath = 'path/to/output/image.png';
+const scale = 2; // Scaling factor
+
+svg2Png(svgPath, pngPath, scale);
+
+// Async/await
+const pngBuffer = await svg2Png(svgPath, scale);
+const pngBase64 = `data:image/png;base64,${pngBuffer.toString('base64')}`;
+console.log(pngBase64);
 ```
 
 ### removeNanCoordinates
@@ -152,19 +169,6 @@ const svgContent = `<svg><path d="M 10,20 nan L 30,40 -nan Z" /></svg>`;
 const normalizedSvgContent = removeNanCoordinates(svgContent);
 console.log(normalizedSvgContent);
 
-```
-
-### svg2png
-Converts an SVG file to PNG format.
-
-```typescript
-import { svg2Png } from 'svg-toolbox';
-
-const svgPath = 'path/to/input/image.svg';
-const pngPath = 'path/to/output/image.png';
-const scale = 2; // Scaling factor
-
-svg2Png(svgPath, pngPath, scale);
 ```
 
 ## License
