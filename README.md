@@ -8,8 +8,9 @@
 # SVG Utility Functions
 This module provides utility functions for working with SVG elements and files, including creating, cloning, merging, converting SVG to Base64, comparing SVG images, normalizing path data, and converting SVG to PNG format.
 
-[![npm version](https://img.shields.io/npm/v/svg-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/svg-toolbox)
-[![npm downloads](https://img.shields.io/npm/dt/svg-toolbox.svg?style=flat-square)](https://www.npmjs.com/package/svg-toolbox)
+[![npm version](https://img.shields.io/npm/v/svg-toolbox.svg?style=for-the-badge)](https://www.npmjs.com/package/svg-toolbox)
+[![npm downloads](https://img.shields.io/npm/dy/svg-toolbox.svg?style=for-the-badge)](https://www.npmjs.com/package/svg-toolbox)
+[![deps](https://img.shields.io/github/license/SteamedBread2333/svg-toolbox.svg?style=for-the-badge)](https://www.npmjs.com/package/svg-toolbox)
 
 ## Installation
 ```bash
