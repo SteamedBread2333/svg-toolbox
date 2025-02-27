@@ -1,6 +1,6 @@
 <h1 align="center">
   <br/>
-    <img width="200" alt="image" src="https://github.com/user-attachments/assets/42bba668-a79c-4d2a-b3ac-393c0c140923" />
+    <img width="260" alt="image" src="https://github.com/user-attachments/assets/fcb0c4f5-8094-44d2-bfca-e4b5f5120f73" />
   <br/>
 </h1>
 
