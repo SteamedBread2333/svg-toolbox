@@ -6,6 +6,7 @@ import fs from 'fs';
 import sharp from 'sharp';
 import { getSVGDimensions } from '../core/dimensions';
 import { ConversionOptions } from '../types';
+import { validateReadPath, validateWritePath } from '../utils/path-validation';
 
 /**
  * Converts an SVG file to PNG format
@@ -20,11 +21,14 @@ export async function svgToImage(
 ): Promise<Buffer> {
   const { scale = 2, format = 'png', quality = 90 } = options;
   
-  if (!fs.existsSync(svgPath)) {
-    throw new Error(`SVG file not found: ${svgPath}`);
+  // Validate and normalize the file path to prevent path traversal
+  const validatedPath = validateReadPath(svgPath, ['.svg']);
+  
+  if (!fs.existsSync(validatedPath)) {
+    throw new Error(`SVG file not found: ${validatedPath}`);
   }
   
-  const svgContent = fs.readFileSync(svgPath, 'utf8');
+  const svgContent = fs.readFileSync(validatedPath, 'utf8');
   const dimensions = getSVGDimensions(svgContent);
   
   if (!dimensions.width || !dimensions.height) {
@@ -34,7 +38,7 @@ export async function svgToImage(
   const width = scale * dimensions.width;
   const height = scale * dimensions.height;
   
-  let sharpInstance = sharp(svgPath).resize(width, height);
+  let sharpInstance = sharp(validatedPath).resize(width, height);
   
   switch (format) {
     case 'jpg':
@@ -70,7 +74,9 @@ export async function svg2Png(
   const buffer = await svgToImage(svgPath, { scale: scale ?? 2, format: 'png' });
   
   if (pngPath) {
-    fs.writeFileSync(pngPath, buffer);
+    // Validate write path to prevent path traversal
+    const validatedWritePath = validateWritePath(pngPath, ['.png']);
+    fs.writeFileSync(validatedWritePath, buffer);
     return;
   }
   

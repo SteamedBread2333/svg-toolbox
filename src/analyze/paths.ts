@@ -8,16 +8,32 @@ import { isValidSvgString, isValidSvgElement } from '../utils/validation';
 import { PathCommand } from '../types';
 
 /**
+ * Maximum allowed path data length to prevent ReDoS attacks
+ */
+const MAX_PATH_DATA_LENGTH = 100000; // 100KB should be sufficient for most SVG paths
+
+/**
  * Parses the 'd' attribute of a path element into command objects
  */
 export function parsePathData(pathData: string): PathCommand[] {
+  // Validate input length to prevent ReDoS attacks
+  if (pathData.length > MAX_PATH_DATA_LENGTH) {
+    throw new Error(`Path data length exceeds maximum allowed length of ${MAX_PATH_DATA_LENGTH} characters`);
+  }
+
   const commands: PathCommand[] = [];
   
   // Split by path commands (M, L, H, V, C, S, Q, T, A, Z)
   const commandRegex = /([MmLlHhVvCcSsQqTtAaZz])((?:\s*-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\s*,?\s*)*)/g;
   let match;
+  let iterations = 0;
+  const MAX_ITERATIONS = 10000; // Prevent infinite loops
   
   while ((match = commandRegex.exec(pathData)) !== null) {
+    iterations++;
+    if (iterations > MAX_ITERATIONS) {
+      throw new Error('Path parsing exceeded maximum iterations. Path data may be malformed.');
+    }
     const type = match[1];
     const paramsStr = match[2].trim();
     

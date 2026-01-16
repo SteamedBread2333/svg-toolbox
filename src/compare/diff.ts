@@ -8,6 +8,7 @@ import sharp from 'sharp';
 import { PNG } from 'pngjs';
 import pixelmatch from 'pixelmatch';
 import { DiffResult } from '../types';
+import { validateReadPath, validateWritePath } from '../utils/path-validation';
 
 /**
  * Compares two PNG images at the pixel level and generates a diff image
@@ -52,17 +53,21 @@ export async function diffImages(
   diffFilePath?: string,
   threshold: number = 0.1
 ): Promise<DiffResult> {
-  if (!fs.existsSync(pathA)) {
-    throw new Error(`File not found: ${pathA}`);
+  // Validate and normalize file paths to prevent path traversal
+  const validatedPathA = validateReadPath(pathA, ['.svg', '.png', '.jpg', '.jpeg', '.webp']);
+  const validatedPathB = validateReadPath(pathB, ['.svg', '.png', '.jpg', '.jpeg', '.webp']);
+  
+  if (!fs.existsSync(validatedPathA)) {
+    throw new Error(`File not found: ${validatedPathA}`);
   }
   
-  if (!fs.existsSync(pathB)) {
-    throw new Error(`File not found: ${pathB}`);
+  if (!fs.existsSync(validatedPathB)) {
+    throw new Error(`File not found: ${validatedPathB}`);
   }
   
   // Convert both images to PNG buffers
-  const pngA = await sharp(pathA).png().toBuffer();
-  const pngB = await sharp(pathB).png().toBuffer();
+  const pngA = await sharp(validatedPathA).png().toBuffer();
+  const pngB = await sharp(validatedPathB).png().toBuffer();
   
   const result = pixelLevelDiff(pngA, pngB, threshold);
   
@@ -71,7 +76,9 @@ export async function diffImages(
     if (!ext) {
       throw new Error('Diff file path must have a file extension');
     }
-    fs.writeFileSync(diffFilePath, result.diffPngBuffer);
+    // Validate write path to prevent path traversal
+    const validatedWritePath = validateWritePath(diffFilePath, ['.png']);
+    fs.writeFileSync(validatedWritePath, result.diffPngBuffer);
   }
   
   return result;
