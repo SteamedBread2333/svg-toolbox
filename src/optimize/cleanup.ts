@@ -44,10 +44,53 @@ export function removeEmptyAttributes(svgContent: Element | string): string {
 }
 
 /**
+ * Maximum allowed SVG content length to prevent ReDoS attacks
+ */
+const MAX_SVG_CONTENT_LENGTH = 10000000; // 10MB should be sufficient for most SVG files
+
+/**
  * Removes comments from SVG content
+ * 
+ * This function uses iterative replacement to handle nested comments correctly
+ * and includes input length validation to prevent ReDoS attacks.
+ * 
+ * The function handles cases like:
+ * - Simple comments: <!-- comment -->
+ * - Nested comments: <!--<!-- inner -->-->
+ * - Multiple comments: <!-- one --><!-- two -->
  */
 export function removeComments(svgContent: string): string {
-  return svgContent.replace(/<!--[\s\S]*?-->/g, '');
+  // Validate input length to prevent ReDoS attacks
+  if (svgContent.length > MAX_SVG_CONTENT_LENGTH) {
+    throw new Error(`SVG content length exceeds maximum allowed length of ${MAX_SVG_CONTENT_LENGTH} characters`);
+  }
+
+  // Use iterative replacement to handle nested comments
+  // This prevents incomplete sanitization where nested comments could reappear
+  // Example: "<!--<!-- comment -->-->" should become "" not "<!-- comment -->"
+  let previous: string;
+  let result = svgContent;
+  let iterations = 0;
+  const MAX_ITERATIONS = 1000; // Prevent infinite loops
+  
+  do {
+    previous = result;
+    // Match HTML comments: <!-- ... -->
+    // The regex uses non-greedy matching (*?) to match the shortest possible comment
+    // This handles nested comments by removing inner comments first
+    result = result.replace(/<!--[\s\S]*?-->/g, '');
+    iterations++;
+    
+    if (iterations > MAX_ITERATIONS) {
+      throw new Error('Comment removal exceeded maximum iterations. SVG content may be malformed.');
+    }
+  } while (result !== previous);
+  
+  // After removing all comment blocks, remove any remaining comment delimiters
+  // This handles edge cases where comment delimiters might be split across replacements
+  result = result.replace(/<!--/g, '').replace(/-->/g, '');
+  
+  return result;
 }
 
 /**

@@ -39,6 +39,42 @@ describe('SVG Cleanup', () => {
       
       expect(result).not.toContain('Comment');
     });
+
+    it('should handle nested comments correctly', () => {
+      // This tests the incomplete sanitization fix
+      // Input: "<!--<!-- comment -->-->" should become "" not "<!-- comment -->"
+      const svgContent = '<svg><!--<!-- nested comment -->--><circle /></svg>';
+      const result = removeComments(svgContent);
+      
+      expect(result).not.toContain('<!--');
+      expect(result).not.toContain('-->');
+      expect(result).not.toContain('nested comment');
+      expect(result).toContain('circle');
+    });
+
+    it('should handle deeply nested comments', () => {
+      const svgContent = '<svg><!--<!--<!-- triple nested -->-->--><circle /></svg>';
+      const result = removeComments(svgContent);
+      
+      expect(result).not.toContain('<!--');
+      expect(result).not.toContain('-->');
+      expect(result).toContain('circle');
+    });
+
+    it('should throw error for content exceeding maximum length', () => {
+      const largeContent = '<!--' + 'x'.repeat(10000001) + '-->';
+      expect(() => removeComments(largeContent)).toThrow('exceeds maximum allowed length');
+    });
+
+    it('should handle comments with newlines', () => {
+      const svgContent = '<svg><!--\nMulti-line\ncomment\n--><circle /></svg>';
+      const result = removeComments(svgContent);
+      
+      expect(result).not.toContain('<!--');
+      expect(result).not.toContain('-->');
+      expect(result).not.toContain('Multi-line');
+      expect(result).toContain('circle');
+    });
   });
 
   describe('normalizeWhitespace', () => {
