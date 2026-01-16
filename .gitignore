@@ -134,3 +134,6 @@ lib/
 test/
 example/
 test.js
+
+# Test fixtures output (keep source SVGs, ignore generated diff images)
+test-fixtures/diff-output/
