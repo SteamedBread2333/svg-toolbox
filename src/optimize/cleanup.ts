@@ -75,20 +75,19 @@ export function removeComments(svgContent: string): string {
   
   do {
     previous = result;
-    // Match HTML comments: <!-- ... -->
+    // Match HTML comments and standalone delimiters:
+    // - Full comments: <!-- ... -->
+    // - Orphaned starts: <!--
+    // - Orphaned ends: -->
     // The regex uses non-greedy matching (*?) to match the shortest possible comment
-    // This handles nested comments by removing inner comments first
-    result = result.replace(/<!--[\s\S]*?-->/g, '');
+    // and is applied iteratively until no further matches remain.
+    result = result.replace(/<!--[\s\S]*?-->|<!--|-->/g, '');
     iterations++;
     
     if (iterations > MAX_ITERATIONS) {
       throw new Error('Comment removal exceeded maximum iterations. SVG content may be malformed.');
     }
   } while (result !== previous);
-  
-  // After removing all comment blocks, remove any remaining comment delimiters
-  // This handles edge cases where comment delimiters might be split across replacements
-  result = result.replace(/<!--/g, '').replace(/-->/g, '');
   
   return result;
 }
