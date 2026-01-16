@@ -1,3 +1,9 @@
+<h1 align="center">
+  <br/>
+    <img width="260" alt="SVG Toolbox Logo" src="https://github.com/user-attachments/assets/fcb0c4f5-8094-44d2-bfca-e4b5f5120f73" />
+  <br/>
+</h1>
+
 # SVG Toolbox
 
 A comprehensive SVG manipulation and analysis library providing capabilities for creating, converting, optimizing, comparing, and analyzing SVG elements.
