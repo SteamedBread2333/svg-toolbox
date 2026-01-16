@@ -76,12 +76,12 @@ export function removeComments(svgContent: string): string {
   do {
     previous = result;
     // Match HTML comments and standalone delimiters:
-    // - Full comments: <!-- ... -->
+    // - Full comments: <!-- ... --> or <!-- ... --!>
     // - Orphaned starts: <!--
-    // - Orphaned ends: -->
+    // - Orphaned ends: --> or --!>
     // The regex uses non-greedy matching (*?) to match the shortest possible comment
     // and is applied iteratively until no further matches remain.
-    result = result.replace(/<!--[\s\S]*?-->|<!--|-->/g, '');
+    result = result.replace(/<!--[\s\S]*?--!?>|<!--|--!?>(?=[^>]|$)/g, '');
     iterations++;
     
     if (iterations > MAX_ITERATIONS) {
