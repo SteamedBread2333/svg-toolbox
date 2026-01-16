@@ -1,7 +1,7 @@
 {
   "name": "svg-toolbox",
   "version": "1.1.12",
-  "description": "This library provides some SVG-related tools",
+  "description": "A comprehensive SVG manipulation and analysis library for creating, converting, optimizing, comparing, and analyzing SVG elements",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
@@ -25,7 +25,14 @@
     "prepublishOnly": "npm run build && npm run test"
   },
   "keywords": [
-    "svg"
+    "svg",
+    "svg-toolbox",
+    "svg-manipulation",
+    "svg-analysis",
+    "svg-optimization",
+    "svg-conversion",
+    "svg-comparison",
+    "image-processing"
   ],
   "author": "pipi",
   "license": "MIT",

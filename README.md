@@ -1,208 +1,208 @@
 # SVG Toolbox
 
-一个功能全面的 SVG 操作和分析工具库，提供 SVG 元素的创建、转换、优化、比较和分析等功能。
+A comprehensive SVG manipulation and analysis library providing capabilities for creating, converting, optimizing, comparing, and analyzing SVG elements.
 
 [![npm version](https://img.shields.io/npm/v/svg-toolbox.svg?style=for-the-badge)](https://www.npmjs.com/package/svg-toolbox)
 [![npm downloads](https://img.shields.io/npm/dy/svg-toolbox.svg?style=for-the-badge)](https://www.npmjs.com/package/svg-toolbox)
 [![License](https://img.shields.io/github/license/SteamedBread2333/svg-toolbox.svg?style=for-the-badge)](https://www.npmjs.com/package/svg-toolbox)
 
-## 安装
+## Installation
 
 ```bash
 npm install svg-toolbox
 ```
 
-## 适用场景
+## Use Cases
 
-### 1. SVG 元素操作场景
+### 1. SVG Element Manipulation
 
-当你需要在 Node.js 环境中创建、克隆或合并 SVG 元素时，可以使用核心元素操作功能：
+When you need to create, clone, or merge SVG elements in Node.js environments:
 
-- **动态生成 SVG 图形**：根据数据动态创建 SVG 元素
-- **SVG 模板复用**：克隆现有 SVG 元素作为模板
-- **组合多个 SVG**：将多个独立的 SVG 图形合并为一个
+- **Dynamic SVG Generation**: Create SVG elements dynamically based on data
+- **SVG Template Reuse**: Clone existing SVG elements as templates
+- **Combine Multiple SVGs**: Merge multiple independent SVG graphics into one
 
-### 2. 格式转换场景
+### 2. Format Conversion
 
-当你需要将 SVG 转换为其他格式或进行编码转换时：
+When you need to convert SVG to other formats or perform encoding conversions:
 
-- **Web 应用嵌入**：将 SVG 转换为 Base64 数据 URI，方便嵌入 HTML/CSS
-- **图片导出**：将 SVG 转换为 PNG、JPG 或 WebP 格式用于下载或分享
-- **跨平台兼容**：在不同系统间传输 SVG 数据时使用 Base64 编码
+- **Web Application Embedding**: Convert SVG to Base64 data URI for easy embedding in HTML/CSS
+- **Image Export**: Convert SVG to PNG, JPG, or WebP formats for download or sharing
+- **Cross-platform Compatibility**: Use Base64 encoding when transferring SVG data between different systems
 
-### 3. 视觉回归测试场景
+### 3. Visual Regression Testing
 
-当你需要比较 SVG 渲染结果以确保视觉一致性时：
+When you need to compare SVG rendering results to ensure visual consistency:
 
-- **自动化测试**：在 CI/CD 流程中检测 SVG 渲染变化
-- **版本对比**：比较不同版本的 SVG 文件差异
-- **质量保证**：确保 SVG 修改不会引入意外的视觉变化
+- **Automated Testing**: Detect SVG rendering changes in CI/CD pipelines
+- **Version Comparison**: Compare differences between different versions of SVG files
+- **Quality Assurance**: Ensure SVG modifications don't introduce unexpected visual changes
 
-### 4. SVG 优化场景
+### 4. SVG Optimization
 
-当你需要清理和优化 SVG 代码时：
+When you need to clean and optimize SVG code:
 
-- **性能优化**：移除无效坐标和空属性，减小文件大小
-- **代码清理**：移除注释和多余空白，提高可读性
-- **数据修复**：修复包含 NaN 或无效值的路径数据
+- **Performance Optimization**: Remove invalid coordinates and empty attributes to reduce file size
+- **Code Cleanup**: Remove comments and excess whitespace to improve readability
+- **Data Repair**: Fix path data containing NaN or invalid values
 
-### 5. SVG 分析场景
+### 5. SVG Analysis
 
-当你需要深入了解 SVG 内容时，内容分析功能可以帮助你：
+When you need to gain insights into SVG content, the analysis features can help you:
 
-#### 颜色提取场景
-- **设计系统构建**：批量分析 SVG 图标库，提取所有使用的颜色，建立设计系统的颜色规范
-- **主题适配**：识别 SVG 中的颜色，自动生成深色/浅色主题版本
-- **可访问性检查**：检查 SVG 使用的颜色是否符合 WCAG 对比度要求
-- **品牌一致性验证**：验证 SVG 图标是否使用了品牌标准色
-- **颜色替换自动化**：识别需要替换的颜色，批量更新 SVG 文件
+#### Color Extraction Use Cases
+- **Design System Building**: Batch analyze SVG icon libraries, extract all used colors, and establish color standards for design systems
+- **Theme Adaptation**: Identify colors in SVG and automatically generate dark/light theme versions
+- **Accessibility Checking**: Verify that SVG colors meet WCAG contrast requirements
+- **Brand Consistency Verification**: Verify that SVG icons use brand standard colors
+- **Automated Color Replacement**: Identify colors that need replacement and batch update SVG files
 
-#### 路径分析场景
-- **SVG 优化决策**：分析路径复杂度，决定是否需要简化或优化
-- **性能分析**：统计路径命令数量，评估 SVG 渲染性能
-- **格式转换准备**：了解路径结构，为转换为其他格式做准备
-- **动画制作**：分析路径命令类型，确定适合的动画方式（如路径描边动画）
-- **质量检测**：检测 SVG 是否包含过于复杂的路径（可能导致性能问题）
-- **路径编辑工具**：为 SVG 编辑器提供路径解析和编辑能力
-- **学习与教学**：分析 SVG 路径结构，帮助理解 SVG 绘制原理
+#### Path Analysis Use Cases
+- **SVG Optimization Decisions**: Analyze path complexity to determine if simplification or optimization is needed
+- **Performance Analysis**: Count path commands to evaluate SVG rendering performance
+- **Format Conversion Preparation**: Understand path structure to prepare for conversion to other formats
+- **Animation Creation**: Analyze path command types to determine suitable animation methods (e.g., path stroke animation)
+- **Quality Detection**: Detect if SVG contains overly complex paths (which may cause performance issues)
+- **Path Editing Tools**: Provide path parsing and editing capabilities for SVG editors
+- **Learning and Teaching**: Analyze SVG path structure to help understand SVG drawing principles
 
-## 功能模块
+## Feature Modules
 
-### 核心功能 (Core)
+### Core Functions
 
-提供基础的 SVG 元素操作能力：
+Provides basic SVG element manipulation capabilities:
 
-- `createSVGElement` - 从字符串创建 SVG 元素
-- `cloneSVGElement` - 深度克隆 SVG 元素
-- `mergeSVGElements` - 合并多个 SVG 元素
-- `getSVGDimensions` - 获取 SVG 尺寸信息
+- `createSVGElement` - Create SVG element from string
+- `cloneSVGElement` - Deep clone SVG element
+- `mergeSVGElements` - Merge multiple SVG elements
+- `getSVGDimensions` - Get SVG dimensions
 
-### 转换功能 (Convert)
+### Conversion Functions
 
-提供格式转换和编码功能：
+Provides format conversion and encoding capabilities:
 
-- `convertSVGToBase64` - SVG 转 Base64 编码
-- `convertBase64ToSVG` - Base64 解码为 SVG
-- `svgToImage` - SVG 转图片格式（PNG/JPG/WebP）
-- `svg2Png` - SVG 转 PNG（兼容旧版 API）
+- `convertSVGToBase64` - Convert SVG to Base64 encoding
+- `convertBase64ToSVG` - Decode Base64 to SVG
+- `svgToImage` - Convert SVG to image formats (PNG/JPG/WebP)
+- `svg2Png` - Convert SVG to PNG (legacy API compatibility)
 
-### 比较功能 (Compare)
+### Comparison Functions
 
-提供图像对比和差异检测：
+Provides image comparison and difference detection:
 
-- `diffImages` - 比较两个图像文件并生成差异图
-- `pixelLevelDiff` - 像素级别的图像差异比较
-- `diffSvg` - SVG 差异比较（兼容旧版 API）
+- `diffImages` - Compare two image files and generate diff image
+- `pixelLevelDiff` - Pixel-level image difference comparison
+- `diffSvg` - SVG difference comparison (legacy API compatibility)
 
-### 优化功能 (Optimize)
+### Optimization Functions
 
-提供 SVG 代码优化和清理：
+Provides SVG code optimization and cleanup:
 
-- `removeNanCoordinates` - 移除路径中的 NaN 坐标
-- `removeEmptyAttributes` - 移除空属性
-- `removeComments` - 移除注释
-- `normalizeWhitespace` - 规范化空白字符
-- `optimizeSVG` - 综合优化 SVG 代码
+- `removeNanCoordinates` - Remove NaN coordinates from paths
+- `removeEmptyAttributes` - Remove empty attributes
+- `removeComments` - Remove comments
+- `normalizeWhitespace` - Normalize whitespace characters
+- `optimizeSVG` - Comprehensive SVG code optimization
 
-### 分析功能 (Analyze)
+### Analysis Functions
 
-提供 SVG 内容分析：
+Provides SVG content analysis:
 
-- `extractColors` - 提取 SVG 中使用的颜色
-- `parsePathData` - 解析路径数据
-- `analyzePaths` - 分析所有路径元素
-- `getPathStatistics` - 获取路径统计信息
+- `extractColors` - Extract colors used in SVG
+- `parsePathData` - Parse path data
+- `analyzePaths` - Analyze all path elements
+- `getPathStatistics` - Get path statistics
 
-## 使用示例
+## Usage Examples
 
-### 基础操作
+### Basic Operations
 
 ```typescript
 import { createSVGElement, cloneSVGElement, mergeSVGElements } from 'svg-toolbox';
 
-// 创建 SVG 元素
+// Create SVG element
 const svg = createSVGElement('<svg><circle cx="50" cy="50" r="40" /></svg>');
 
-// 克隆元素
+// Clone element
 const cloned = cloneSVGElement(svg);
 
-// 合并多个元素
+// Merge multiple elements
 const merged = mergeSVGElements([svg, cloned]);
 ```
 
-### 格式转换
+### Format Conversion
 
 ```typescript
 import { convertSVGToBase64, svgToImage } from 'svg-toolbox';
 
-// 转换为 Base64
+// Convert to Base64
 const base64 = convertSVGToBase64('<svg>...</svg>');
 
-// 转换为 PNG
+// Convert to PNG
 const pngBuffer = await svgToImage('input.svg', { scale: 2, format: 'png' });
 
-// 转换为 WebP
+// Convert to WebP
 const webpBuffer = await svgToImage('input.svg', { format: 'webp', quality: 90 });
 ```
 
-### 图像比较
+### Image Comparison
 
 ```typescript
 import { diffImages } from 'svg-toolbox';
 
-// 比较两个图像并生成差异图
+// Compare two images and generate diff image
 const result = await diffImages('image1.svg', 'image2.svg', 'diff.png');
-console.log(`差异像素数: ${result.numDiffPixels}`);
+console.log(`Number of different pixels: ${result.numDiffPixels}`);
 ```
 
-### SVG 优化
+### SVG Optimization
 
 ```typescript
 import { optimizeSVG, removeNanCoordinates } from 'svg-toolbox';
 
-// 综合优化
+// Comprehensive optimization
 const optimized = optimizeSVG('<svg><!-- comment --><path d="M 10,20 nan L 30,40" /></svg>');
 
-// 移除 NaN 坐标
+// Remove NaN coordinates
 const cleaned = removeNanCoordinates('<svg><path d="M 10,20 nan L 30,40" /></svg>');
 ```
 
-### 内容分析
+### Content Analysis
 
 ```typescript
 import { extractColors, getPathStatistics } from 'svg-toolbox';
 
-// 提取颜色
+// Extract colors
 const colors = extractColors('<svg><circle fill="red" stroke="blue" /></svg>');
 
-// 获取路径统计
+// Get path statistics
 const stats = getPathStatistics('<svg><path d="M 10,20 L 30,40 Z" /></svg>');
-console.log(`路径数: ${stats.totalPaths}, 命令数: ${stats.totalCommands}`);
+console.log(`Paths: ${stats.totalPaths}, Commands: ${stats.totalCommands}`);
 ```
 
-## API 文档
+## API Documentation
 
-详细的 API 文档请参考 [TypeScript 类型定义](./src/types/index.ts) 和源代码注释。
+For detailed API documentation, please refer to [TypeScript type definitions](./src/types/index.ts) and source code comments.
 
-## 开发
+## Development
 
 ```bash
-# 安装依赖
+# Install dependencies
 npm install
 
-# 运行测试
+# Run tests
 npm test
 
-# 构建项目
+# Build project
 npm run build
 
-# 监听模式测试
+# Watch mode testing
 npm run test:watch
 
-# 生成覆盖率报告
+# Generate coverage report
 npm run test:coverage
 ```
 
-## 许可证
+## License
 
 MIT License
